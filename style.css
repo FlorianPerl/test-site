@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 2em;
+}
+
+h1 {
+  color: #555;
+}
+
+.product-list {
+  margin-bottom: 2em;
+}
+
+.product-row {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.actions {
+  display: flex;
+  gap: 1em;
+}
+
+.btn {
+  padding: 0.6em 1em;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.btn.view {
+  background-color: #eee;
+}
+
+.btn.add {
+  background-color: #cce0ff;
+  border: 1px solid #339;
+  color: #003366;
+}
+
+.btn.cart {
+  background-color: #d5edd5;
+  border: 1px solid #396;
+  color: #155724;
+}
+
+.btn.checkout {
+  background-color: #98d498;
+  border: 1px solid #2c662d;
+  color: white;
+}
+
+.btn.purchase {
+  background-color: #008578;
+  border: none;
+  color: white;
+}
