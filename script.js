@@ -1,8 +1,15 @@
-// GTM Product Events: Add to Cart, View Product, View Cart (with localStorage)
+// GTM Events: Add to Cart, View Product, View Cart, Page View
 document.addEventListener('DOMContentLoaded', () => {
   const addButtons = document.querySelectorAll('.product-row .btn.add');
   const viewButtons = document.querySelectorAll('.product-row .btn.view');
   const viewCartButton = document.querySelector('.btn.cart');
+
+  // Add Page View Button
+  const actionsDiv = document.querySelector('.actions');
+  const pageViewBtn = document.createElement('button');
+  pageViewBtn.textContent = "page view";
+  pageViewBtn.className = "btn page-view";
+  actionsDiv.appendChild(pageViewBtn);
 
   const productData = [
     {
@@ -80,5 +87,12 @@ document.addEventListener('DOMContentLoaded', () => {
       Products: cartArray
     });
     console.log("Cart Viewed:", cartArray);
+  });
+
+  pageViewBtn.addEventListener('click', () => {
+    dataLayer.push({
+      event: "Page Viewed"
+    });
+    console.log("Page Viewed event pushed.");
   });
 });
