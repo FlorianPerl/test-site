@@ -60,7 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
         addToCart(index);
         dataLayer.push({
           event: "Product Added to Cart",
-          Products: [{ ...productData[index], "Product Quantity": 1 }]
+          amplitude_event_properties: {
+            Products: [{ ...productData[index], "Product Quantity": 1 }]
+          }
         });
         console.log("Add to Cart:", productData[index]);
       }
@@ -72,7 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (index < 3) {
         dataLayer.push({
           event: "Product Viewed",
-          Products: [productData[index]]
+          amplitude_event_properties: {
+            Products: [productData[index]]
+          }
         });
         console.log("Product Viewed:", productData[index]);
       }
@@ -84,14 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartArray = Object.values(cart);
     dataLayer.push({
       event: "Cart Viewed",
-      Products: cartArray
+      amplitude_event_properties: {
+        Products: cartArray
+      }
     });
     console.log("Cart Viewed:", cartArray);
   });
 
   pageViewBtn.addEventListener('click', () => {
     dataLayer.push({
-      event: "Page Viewed"
+      event: "Page Viewed",
+      amplitude_event_properties: {}
     });
     console.log("Page Viewed event pushed.");
   });
