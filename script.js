@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const addButtons = document.querySelectorAll('.product-row .btn.add');
   const viewButtons = document.querySelectorAll('.product-row .btn.view');
   const viewCartButton = document.querySelector('.btn.cart');
+  const startCheckoutButton = document.querySelector('.btn.checkout');
+  const purchaseButton = document.querySelector('.btn.purchase');
 
   // Add Page View Button
   const actionsDiv = document.querySelector('.actions');
@@ -31,6 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
       "Product Price": 499
     }
   ];
+
+  function generateTransactionId() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 10; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
 
   function getCart() {
     return JSON.parse(localStorage.getItem('cart')) || {};
@@ -101,5 +112,34 @@ document.addEventListener('DOMContentLoaded', () => {
       amplitude_event_properties: {}
     });
     console.log("Page Viewed event pushed.");
+  });
+
+  startCheckoutButton.addEventListener('click', () => {
+    const cart = getCart();
+    const cartArray = Object.values(cart);
+    dataLayer.push({
+      event: "Checkout Initiated",
+      amplitude_event_properties: {
+        Products: cartArray
+      }
+    });
+    console.log("Checkout Initiated:", cartArray);
+  });
+
+  purchaseButton.addEventListener('click', () => {
+    const cart = getCart();
+    const cartArray = Object.values(cart);
+    const revenue = calculateRevenue(cart);
+    const transactionId = generateTransactionId();
+    
+    dataLayer.push({
+      event: "Transaction Completed",
+      amplitude_event_properties: {
+        Products: cartArray,
+        Revenue: revenue,
+        "Transaction ID": transactionId
+      }
+    });
+    console.log("Transaction Completed:", { Products: cartArray, Revenue: revenue, "Transaction ID": transactionId });
   });
 });
