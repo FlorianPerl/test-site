@@ -168,6 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
   loginButton.addEventListener('click', () => {
     const userIds = ["ABC123", "DEF456", "GHI789"];
     const userId = userIds[Math.floor(Math.random() * userIds.length)];
+    const workshopIds = ["Grandpa's Workshop", "Garage", "Beekeeper's Woorkshop", "Basement"];
+    const workshopId = workshopIds[Math.floor(Math.random() * workshopIds.length)]
     dataLayer.push({
       event: "Login",
       "User ID": userId
