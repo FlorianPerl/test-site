@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const workshopIds = ["Grandpa's Workshop", "Garage", "Beekeeper's Woorkshop", "Basement"];
     const workshopId = workshopIds[Math.floor(Math.random() * workshopIds.length)]
     dataLayer.push({
-      event: "Login",
+      event: "Log In",
       "User ID": userId,
       "Workshop ID": workshopId
     });
