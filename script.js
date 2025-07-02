@@ -5,13 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const viewCartButton = document.querySelector('.btn.cart');
   const startCheckoutButton = document.querySelector('.btn.checkout');
   const purchaseButton = document.querySelector('.btn.purchase');
-
-  // Add Page View Button
-  const actionsDiv = document.querySelector('.actions');
-  const pageViewBtn = document.createElement('button');
-  pageViewBtn.textContent = "page view";
-  pageViewBtn.className = "btn page-view";
-  actionsDiv.appendChild(pageViewBtn);
+  const loginButton = document.querySelector('.btn.login');
+  const pageViewBtn = document.querySelector('.actions .btn.view');
+  const logoutButton = document.querySelector('.btn.logout');
+  const emptyCartButton = document.querySelector('.btn.empty-cart');
 
   const productData = [
     {
@@ -31,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
       "Product Category 1": "Workshop",
       "Product Category 2": "Kits",
       "Product Price": 499
+    },
+    {
+      "Product Name": "Adjustable Wrench",
+      "Product Category 1": "Workshop",
+      "Product Category 2": "Hand Tools",
+      "Product Price": 299
     }
   ];
 
@@ -77,12 +80,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         console.log("Add to Cart:", productData[index]);
       }
+      if (index === 3) {
+        addToCart(index);
+        dataLayer.push({
+          event: "Product Added to Cart",
+          amplitude_event_properties: {
+            Products: [{ ...productData[index], "Product Quantity": 1 }]
+          }
+        });
+        console.log("Add to Cart:", productData[index]);
+      }
     });
   });
 
   viewButtons.forEach((button, index) => {
     button.addEventListener('click', () => {
       if (index < 3) {
+        dataLayer.push({
+          event: "Product Viewed",
+          amplitude_event_properties: {
+            Products: [productData[index]]
+          }
+        });
+        console.log("Product Viewed:", productData[index]);
+      }
+      if (index === 3) {
         dataLayer.push({
           event: "Product Viewed",
           amplitude_event_properties: {
@@ -141,5 +163,29 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     console.log("Transaction Completed:", { Products: cartArray, Revenue: revenue, "Transaction ID": transactionId });
+  });
+
+  loginButton.addEventListener('click', () => {
+    const userIds = ["ABC123", "DEF456", "GHI789"];
+    const userId = userIds[Math.floor(Math.random() * userIds.length)];
+    dataLayer.push({
+      event: "Login",
+      "User ID": userId
+    });
+    console.log("Login event pushed:", { event: "Login", "User ID": userId });
+  });
+
+  logoutButton.addEventListener('click', () => {
+    dataLayer.push({
+      event: "Log Out",
+      "User ID": undefined
+    });
+    console.log("Log Out event pushed:", { event: "Log Out", "User ID": undefined });
+  });
+
+  emptyCartButton.addEventListener('click', () => {
+    localStorage.removeItem('cart');
+    dataLayer.push({ event: "Empty Cart" });
+    console.log("Cart has been emptied.");
   });
 });
