@@ -1,229 +1,151 @@
-// GTM Events: Add to Cart, View Product, View Cart, Page View
-document.addEventListener('DOMContentLoaded', () => {
-  const addButtons = document.querySelectorAll('.product-row .btn.add');
-  const viewButtons = document.querySelectorAll('.product-row .btn.view');
-  const viewCartButton = document.querySelector('.btn.cart');
-  const startCheckoutButton = document.querySelector('.btn.checkout');
-  const purchaseButton = document.querySelector('.btn.purchase');
-  const loginButton = document.querySelector('.btn.login');
-  const pageViewBtn = document.querySelector('.actions .btn.view');
-  const logoutButton = document.querySelector('.btn.logout');
-  const emptyCartButton = document.querySelector('.btn.empty-cart');
-  // Get the new change workshop button
-  const changeWorkshopButton = document.querySelector('.btn.change-workshop');
+body {
+  font-family: Arial, sans-serif;
+  padding: 2em;
+  background: #2c2c2c; /* Darker background for the page */
+  color: #f0f0f0; /* Light text color for contrast */
+}
 
-  const productData = [
-    {
-      "Product Name": "Carpenter's Hammer",
-      "Product Category 1": "Workshop",
-      "Product Category 2": "Hand Tools",
-      "Product Price": 199
-    },
-    {
-      "Product Name": "Electric Drill",
-      "Product Category 1": "Workshop",
-      "Product Category 2": "Power Tools",
-      "Product Price": 899
-    },
-    {
-      "Product Name": "Tool Set (32pcs)",
-      "Product Category 1": "Workshop",
-      "Product Category 2": "Kits",
-      "Product Price": 499
-    },
-    {
-      "Product Name": "Adjustable Wrench",
-      "Product Category 1": "Workshop",
-      "Product Category 2": "Hand Tools",
-      "Product Price": 299
-    }
-  ];
+h1 {
+  color: #f0f0f0; /* Adjust heading color for dark background */
+}
 
-  function generateTransactionId() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < 10; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  }
+.product-list {
+  margin-bottom: 2em;
+}
 
-  function getCart() {
-    return JSON.parse(localStorage.getItem('cart')) || {};
-  }
+.product-row {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
 
-  function saveCart(cart) {
-    localStorage.setItem('cart', JSON.stringify(cart));
-  }
+.actions {
+  display: flex;
+  gap: 1em;
+}
 
-  function addToCart(index) {
-    const cart = getCart();
-    const productName = productData[index]["Product Name"];
-    if (!cart[productName]) {
-      cart[productName] = {
-        ...productData[index],
-        "Product Quantity": 1
-      };
-    } else {
-      cart[productName]["Product Quantity"] += 1;
-    }
-    saveCart(cart);
-  }
+.btn {
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  border-radius: 6px; /* Slightly more rounded corners */
+  background: #4a4a4a; /* Dark grey, like metal */
+  border: 1px solid #2c2c2c; /* Darker border */
+  color: #f0f0f0; /* Light text for contrast */
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+  font-weight: 600; /* Slightly bolder text */
+  text-transform: uppercase; /* Make it stand out */
+  letter-spacing: 0.05em; /* Add some spacing */
+}
 
-  addButtons.forEach((button, index) => {
-    button.addEventListener('click', () => {
-      if (index < 3) {
-        addToCart(index);
-        dataLayer.push({
-          event: "Product Added to Cart",
-          amplitude_event_properties: {
-            Products: [{ ...productData[index], "Product Quantity": 1 }]
-          }
-        });
-        console.log("Add to Cart:", productData[index]);
-      }
-      if (index === 3) {
-        addToCart(index);
-        dataLayer.push({
-          event: "Product Added to Cart",
-          amplitude_event_properties: {
-            Products: [{ ...productData[index], "Product Quantity": 1 }]
-          }
-        });
-        console.log("Add to Cart:", productData[index]);
-      }
-    });
-  });
+.btn:hover, .btn:focus {
+  background: #616161; /* Lighter grey on hover */
+  border-color: #4a4a4a;
+  color: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+  transform: translateY(-1px); /* Slight lift effect */
+}
 
-  viewButtons.forEach((button, index) => {
-    button.addEventListener('click', () => {
-      if (index < 3) {
-        dataLayer.push({
-          event: "Product Viewed",
-          amplitude_event_properties: {
-            Products: [productData[index]]
-          }
-        });
-        console.log("Product Viewed:", productData[index]);
-      }
-      if (index === 3) {
-        dataLayer.push({
-          event: "Product Viewed",
-          amplitude_event_properties: {
-            Products: [productData[index]]
-          }
-        });
-        console.log("Product Viewed:", productData[index]);
-      }
-    });
-  });
+/* Specific button styles, adjusted to complement the new base style */
+.btn.view {
+  background: #5a5a5a; /* Slightly lighter dark grey for view */
+  border: 1px solid #3c3c3c;
+  color: #f0f0f0;
+}
 
-  viewCartButton.addEventListener('click', () => {
-    const cart = getCart();
-    const cartArray = Object.values(cart);
-    dataLayer.push({
-      event: "Cart Viewed",
-      amplitude_event_properties: {
-        Products: cartArray
-      }
-    });
-    console.log("Cart Viewed:", cartArray);
-  });
+.btn.view:hover, .btn.view:focus {
+  background: #717171;
+  border-color: #5a5a5a;
+}
 
-  pageViewBtn.addEventListener('click', () => {
-    dataLayer.push({
-      event: "Page Viewed",
-      amplitude_event_properties: {}
-    });
-    console.log("Page Viewed event pushed.");
-  });
+.btn.add {
+  background: #388e3c; /* Darker green for add */
+  border: 1px solid #1b5e20;
+  color: #ffffff;
+}
 
-  startCheckoutButton.addEventListener('click', () => {
-    const cart = getCart();
-    const cartArray = Object.values(cart);
-    dataLayer.push({
-      event: "Checkout Initiated",
-      amplitude_event_properties: {
-        Products: cartArray
-      }
-    });
-    console.log("Checkout Initiated:", cartArray);
-  });
+.btn.add:hover, .btn.add:focus {
+  background: #4caf50;
+  border-color: #388e3c;
+}
 
-  purchaseButton.addEventListener('click', () => {
-    const cart = getCart();
-    const cartArray = Object.values(cart);
-    const revenue = calculateRevenue(cart); // Assuming calculateRevenue is defined elsewhere or not strictly needed for this task
-    const transactionId = generateTransactionId();
-    
-    dataLayer.push({
-      event: "Transaction Completed",
-      amplitude_event_properties: {
-        Products: cartArray,
-        Revenue: revenue,
-        "Transaction ID": transactionId
-      }
-    });
-    console.log("Transaction Completed:", { Products: cartArray, Revenue: revenue, "Transaction ID": transactionId });
-  });
+.btn.cart {
+  background: #1976d2; /* Darker blue for cart */
+  border: 1px solid #0d47a1;
+  color: #ffffff;
+}
 
-  loginButton.addEventListener('click', () => {
-    const userIds = ["Mandy", "Castello", "Frank", "Takeda"];
-    const userId = userIds[Math.floor(Math.random() * userIds.length)];
-    const workshopIds = ["Grandpa's Workshop", "Subaru Garage", "Beekeeper's Woorkshop", "Anise's Cabin"];
-    const workshopId = workshopIds[Math.floor(Math.random() * workshopIds.length)]
-    dataLayer.push({
-      event: "Log In",
-      "user_id": userId,
-      amplitude_groups: {
-        group_type: "Workshop ID",
-        group_name: workshopId
-      }
-    });
-    console.log("Login event pushed:", { event: "Login", "user_id": userId, "Workshop ID": workshopId });
-  });
+.btn.cart:hover, .btn.cart:focus {
+  background: #2196f3;
+  border-color: #1976d2;
+}
 
-  logoutButton.addEventListener('click', () => {
-    dataLayer.push({
-      event: "Log Out",
-      "user_id": undefined
-    });
-    console.log("Log Out event pushed:", { event: "Log Out", "User ID": undefined });
-  });
+.btn.empty-cart {
+  background: #d32f2f; /* Darker red for empty cart */
+  border: 1px solid #b71c1c;
+  color: #ffffff;
+}
 
-  emptyCartButton.addEventListener('click', () => {
-    localStorage.removeItem('cart');
-    dataLayer.push({ event: "Empty Cart" });
-    console.log("Cart has been emptied.");
-  });
+.btn.empty-cart:hover, .btn.empty-cart:focus {
+  background: #ef5350;
+  border-color: #d32f2f;
+}
 
-  // New functionality for "Change Workshop" button
-  changeWorkshopButton.addEventListener('click', () => {
-    const workshopOptions = ["Grandpa's Workshop", "Subaru Garage", "Beekeeper's Woorkshop", "Anise's Cabin"];
-    const randomWorkshopId = workshopOptions[Math.floor(Math.random() * workshopOptions.length)];
-    
-    dataLayer.push({
-      event: "Workshop Changed",
-      amplitude_groups: {
-        group_type: "Workshop ID",
-        group_name: randomWorkshopId
-      }
-    });
-    console.log("Workshop Changed event pushed:", {
-      event: "Workshop Changed",
-      amplitude_groups: {
-        group_type: "Workshop ID",
-        group_name: randomWorkshopId
-      }
-    });
-  });
+.btn.checkout {
+  background: #fbc02d; /* Darker yellow for checkout */
+  border: 1px solid #ff8f00;
+  color: #333333; /* Darker text for better contrast on yellow */
+}
 
-  // Helper function for calculateRevenue, if it's missing from the original script
-  function calculateRevenue(cart) {
-    let totalRevenue = 0;
-    for (const item in cart) {
-      totalRevenue += cart[item]["Product Price"] * cart[item]["Product Quantity"];
-    }
-    return totalRevenue;
-  }
-});
+.btn.checkout:hover, .btn.checkout:focus {
+  background: #ffeb3b;
+  border-color: #fbc02d;
+}
+
+.btn.purchase {
+  background: #00838f; /* Darker cyan for purchase */
+  border: 1px solid #006064;
+  color: #ffffff;
+}
+
+.btn.purchase:hover, .btn.purchase:focus {
+  background: #00bcd4;
+  border-color: #00838f;
+}
+
+.btn.login {
+  background: #616161; /* Dark grey for login */
+  border: 1px solid #424242;
+  color: #f0f0f0;
+}
+
+.btn.login:hover, .btn.login:focus {
+  background: #757575;
+  border-color: #616161;
+}
+
+.btn.logout {
+  background: #c62828; /* Darker red for logout */
+  border: 1px solid #a10000;
+  color: #ffffff;
+}
+
+.btn.logout:hover, .btn.logout:focus {
+  background: #e53935;
+  border-color: #c62828;
+}
+
+/* The change-workshop button now inherits from .btn and has no specific override */
+/* .btn.change-workshop styles are removed as they are now covered by .btn */
+
+.login-container {
+  position: static;
+  margin: 1em 0 2em 0;
+  z-index: auto;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+}
