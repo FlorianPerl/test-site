@@ -205,15 +205,15 @@ document.addEventListener('DOMContentLoaded', () => {
     dataLayer.push({
       event: "Workshop Changed",
       amplitude_groups: {
-        groupType: "Workshop ID",
-        groupName: randomWorkshopId
+        group_type: "Workshop ID",
+        group_name: randomWorkshopId
       }
     });
     console.log("Workshop Changed event pushed:", {
       event: "Workshop Changed",
       amplitude_groups: {
-        groupType: "Workshop ID",
-        groupName: randomWorkshopId
+        group_type: "Workshop ID",
+        group_name: randomWorkshopId
       }
     });
   });
