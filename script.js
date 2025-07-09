@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageViewBtn = document.querySelector('.actions .btn.view');
   const logoutButton = document.querySelector('.btn.logout');
   const emptyCartButton = document.querySelector('.btn.empty-cart');
+  // Get the new change workshop button
+  const changeWorkshopButton = document.querySelector('.btn.change-workshop');
 
   const productData = [
     {
@@ -151,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
   purchaseButton.addEventListener('click', () => {
     const cart = getCart();
     const cartArray = Object.values(cart);
-    const revenue = calculateRevenue(cart);
+    const revenue = calculateRevenue(cart); // Assuming calculateRevenue is defined elsewhere or not strictly needed for this task
     const transactionId = generateTransactionId();
     
     dataLayer.push({
@@ -194,4 +196,34 @@ document.addEventListener('DOMContentLoaded', () => {
     dataLayer.push({ event: "Empty Cart" });
     console.log("Cart has been emptied.");
   });
+
+  // New functionality for "Change Workshop" button
+  changeWorkshopButton.addEventListener('click', () => {
+    const workshopOptions = ["Grandpa's Workshop", "Subaru Garage", "Beekeeper's Woorkshop", "Anise's Cabin"];
+    const randomWorkshopId = workshopOptions[Math.floor(Math.random() * workshopOptions.length)];
+    
+    dataLayer.push({
+      event: "Workshop Changed",
+      amplitude_groups: {
+        groupType: "Workshop ID",
+        groupName: randomWorkshopId
+      }
+    });
+    console.log("Workshop Changed event pushed:", {
+      event: "Workshop Changed",
+      amplitude_groups: {
+        groupType: "Workshop ID",
+        groupName: randomWorkshopId
+      }
+    });
+  });
+
+  // Helper function for calculateRevenue, if it's missing from the original script
+  function calculateRevenue(cart) {
+    let totalRevenue = 0;
+    for (const item in cart) {
+      totalRevenue += cart[item]["Product Price"] * cart[item]["Product Quantity"];
+    }
+    return totalRevenue;
+  }
 });
