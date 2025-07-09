@@ -90,8 +90,33 @@ h1 {
   color: #b71c1c;
 }
 
+/* New workshop-style for the change-workshop button */
+.btn.change-workshop {
+  background: #4a4a4a; /* Dark grey, like metal */
+  border: 1px solid #2c2c2c; /* Darker border */
+  color: #f0f0f0; /* Light text for contrast */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+  font-weight: 600; /* Slightly bolder text */
+  text-transform: uppercase; /* Make it stand out */
+  letter-spacing: 0.05em; /* Add some spacing */
+  border-radius: 6px; /* Slightly more rounded corners */
+}
+
+.btn.change-workshop:hover,
+.btn.change-workshop:focus {
+  background: #616161; /* Lighter grey on hover */
+  border-color: #4a4a4a;
+  color: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+  transform: translateY(-1px); /* Slight lift effect */
+}
+
 .login-container {
   position: static;
   margin: 1em 0 2em 0;
   z-index: auto;
+  display: flex; /* Use flexbox for better button alignment */
+  gap: 1em; /* Space between buttons */
+  align-items: center;
+  justify-content: center; /* Center the buttons */
 }
