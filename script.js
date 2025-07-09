@@ -166,15 +166,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   loginButton.addEventListener('click', () => {
-    const userIds = ["ABC123", "DEF456", "GHI789"];
+    const userIds = ["Mandy", "Castello", "Frank", "Takeda"];
     const userId = userIds[Math.floor(Math.random() * userIds.length)];
-    const workshopIds = ["Grandpa's Workshop", "Garage", "Beekeeper's Woorkshop", "Basement"];
+    const workshopIds = ["Grandpa's Workshop", "Subaru Garage", "Beekeeper's Woorkshop", "Anise's Cabin"];
     const workshopId = workshopIds[Math.floor(Math.random() * workshopIds.length)]
     dataLayer.push({
       event: "Log In",
       "User ID": userId,
-      amplitude_group_properties: {
-        "Workshop ID": workshopId
+      amplitude_groups: {
+        group_type: "Workshop ID",
+        groupName: workshopId
       }
     });
     console.log("Login event pushed:", { event: "Login", "User ID": userId, "Workshop ID": workshopId });
