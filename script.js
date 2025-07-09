@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "user_id": userId,
       amplitude_groups: {
         group_type: "Workshop ID",
-        groupName: workshopId
+        group_name: workshopId
       }
     });
     console.log("Login event pushed:", { event: "Login", "user_id": userId, "Workshop ID": workshopId });
