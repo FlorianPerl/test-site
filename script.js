@@ -172,9 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const workshopId = workshopIds[Math.floor(Math.random() * workshopIds.length)]
     dataLayer.push({
       event: "Log In",
-      amplitude_user_properties: {
-        "User ID": userId
-      },
+      "User ID": userId,
       amplitude_group_properties: {
         "Workshop ID": workshopId
       }
