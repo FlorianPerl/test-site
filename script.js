@@ -172,19 +172,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const workshopId = workshopIds[Math.floor(Math.random() * workshopIds.length)]
     dataLayer.push({
       event: "Log In",
-      "User ID": userId,
+      "user_id": userId,
       amplitude_groups: {
         group_type: "Workshop ID",
         groupName: workshopId
       }
     });
-    console.log("Login event pushed:", { event: "Login", "User ID": userId, "Workshop ID": workshopId });
+    console.log("Login event pushed:", { event: "Login", "user_id": userId, "Workshop ID": workshopId });
   });
 
   logoutButton.addEventListener('click', () => {
     dataLayer.push({
       event: "Log Out",
-      "User ID": undefined
+      "user_id": undefined
     });
     console.log("Log Out event pushed:", { event: "Log Out", "User ID": undefined });
   });
