@@ -5,13 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ecommerce test site</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Google Tag Manager -->
+  <!-- Google Tag Manager
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-W9F77TCT');</script>
-  <!-- End Google Tag Manager -->
+  End Google Tag Manager -->
+  <!-- Google Tag Manager -->
+<script>
+const gtmContainerId = 'GTM-W9F77TCT'; // Replace with your container ID
+const fallbackScriptUrl = 'https://google.com/fpt/fpt655.js'; // Replace with your tracking domain URL
+
+
+function loadContainerFromUrl(url, gtmContainerId) {
+(function (w, d, s, l, i) {
+w[l] = w[l] || [];
+w[l].push({
+'gtm.start': new Date().getTime(),
+event: 'gtm.js'
+});
+var f = d.getElementsByTagName(s)[0],
+j = d.createElement(s),
+dl = l !== 'dataLayer' ? '&l=' + l : '';
+
+
+j.async = true;
+j.src = url + '?id=' + i + dl;
+f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', gtmContainerId);
+}
+  
+
+
+const primaryScriptUrl = 'https://www.googletagmanager.com/gtm.js';
+loadContainerFromUrl(primaryScriptUrl, gtmContainerId);
+window.addEventListener("load", () => {
+if (window.google_tag_manager === undefined) {
+loadContainerFromUrl(fallbackScriptUrl, gtmContainerId);
+}
+});
+  console.log("sGTM loaded");
+</script>
+<!-- End Google Tag Manager -->
+
 </head>
 <body>
   <h1>ecommerce test site</h1>
