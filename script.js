@@ -11,31 +11,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const emptyCartButton = document.querySelector('.btn.empty-cart');
   // Get the new change workshop button
   const changeWorkshopButton = document.querySelector('.btn.change-workshop');
-
+  
+  // Update version no.
+  console.log("v. 11");
+  
   const productData = [
     {
       "Product Name": "Carpenter's Hammer",
       "Product Category 1": "Workshop",
       "Product Category 2": "Hand Tools",
-      "Product Price": 199
+      "Product Price": 199,
+      "$price": 199
     },
     {
       "Product Name": "Electric Drill",
       "Product Category 1": "Workshop",
       "Product Category 2": "Power Tools",
-      "Product Price": 899
+      "Product Price": 899,
+      "$price": 899
     },
     {
       "Product Name": "Tool Set (32pcs)",
       "Product Category 1": "Workshop",
       "Product Category 2": "Kits",
-      "Product Price": 499
+      "Product Price": 499,
+      "$price":499
     },
     {
       "Product Name": "Adjustable Wrench",
       "Product Category 1": "Workshop",
       "Product Category 2": "Hand Tools",
-      "Product Price": 299
+      "Product Price": 299,
+      "$price": 299
     }
   ];
 
