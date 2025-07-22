@@ -21,28 +21,32 @@ document.addEventListener('DOMContentLoaded', () => {
       "Product Category 1": "Workshop",
       "Product Category 2": "Hand Tools",
       "Product Price": 199,
-      "$price": 199
+      "$price": 199,
+      "$currency": "PLN"
     },
     {
       "Product Name": "Electric Drill",
       "Product Category 1": "Workshop",
       "Product Category 2": "Power Tools",
       "Product Price": 899,
-      "$price": 899
+      "$price": 899,
+      "$currency": "PLN"
     },
     {
       "Product Name": "Tool Set (32pcs)",
       "Product Category 1": "Workshop",
       "Product Category 2": "Kits",
       "Product Price": 499,
-      "$price":499
+      "$price":499,
+      "$currency": "PLN"
     },
     {
       "Product Name": "Adjustable Wrench",
       "Product Category 1": "Workshop",
       "Product Category 2": "Hand Tools",
       "Product Price": 299,
-      "$price": 299
+      "$price": 299,
+      "$currency": "PLN"
     }
   ];
 
@@ -168,7 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
       amplitude_event_properties: {
         Products: cartArray,
         Revenue: revenue,
-        "Transaction ID": transactionId
+        $revenue: revenue,
+        $currency: "PLN",
+        "Transaction ID": transactionId,
+        $transactionId: transactionId
       }
     });
     console.log("Transaction Completed:", { Products: cartArray, Revenue: revenue, "Transaction ID": transactionId });
