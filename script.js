@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const changeWorkshopButton = document.querySelector('.btn.change-workshop');
   
   // Update version no.
-  console.log("v. 11");
+  console.log("v. 12");
   
   const productData = [
     {
