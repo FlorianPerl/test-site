@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const emptyCartButton = document.querySelector('.btn.empty-cart');
   // Get the new change workshop button
   const changeWorkshopButton = document.querySelector('.btn.change-workshop');
-  
+
   // Update version no.
   console.log("v. 12");
-  
+
   const productData = [
     {
       "Product Name": "Carpenter's Hammer",
@@ -83,62 +83,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   addButtons.forEach((button, index) => {
     button.addEventListener('click', () => {
-      if (index < 3) {
-        addToCart(index);
-        dataLayer.push({
-          event: "Product Added to Cart",
-          amplitude_event_properties: {
-            Products: [{ ...productData[index], "Product Quantity": 1 }]
-          }
-        });
-        console.log("Add to Cart:", productData[index]);
-      }
-      if (index === 3) {
-        addToCart(index);
-        dataLayer.push({
-          event: "Product Added to Cart",
-          amplitude_event_properties: {
-            Products: [{ ...productData[index], "Product Quantity": 1 }]
-          }
-        });
-        console.log("Add to Cart:", productData[index]);
-      }
+      addToCart(index);
+      const product = productData[index];
+      const quantity = 1; // For this event, quantity is always 1
+      const productWithValue = {
+        ...product,
+        "Product Quantity": quantity,
+        "Product Value": product["Product Price"] * quantity
+      };
+
+      dataLayer.push({
+        event: "Product Added to Cart",
+        amplitude_event_properties: {
+          Products: [productWithValue]
+        }
+      });
+      console.log("Add to Cart:", productWithValue);
     });
   });
 
   viewButtons.forEach((button, index) => {
     button.addEventListener('click', () => {
-      if (index < 3) {
-        dataLayer.push({
-          event: "Product Viewed",
-          amplitude_event_properties: {
-            Products: [productData[index]]
-          }
-        });
-        console.log("Product Viewed:", productData[index]);
-      }
-      if (index === 3) {
-        dataLayer.push({
-          event: "Product Viewed",
-          amplitude_event_properties: {
-            Products: [productData[index]]
-          }
-        });
-        console.log("Product Viewed:", productData[index]);
-      }
+      // Note: 'Product Value' is not added here as 'Product Quantity' is not available.
+      dataLayer.push({
+        event: "Product Viewed",
+        amplitude_event_properties: {
+          Products: [productData[index]]
+        }
+      });
+      console.log("Product Viewed:", productData[index]);
     });
   });
 
   viewCartButton.addEventListener('click', () => {
     const cart = getCart();
     const cartArray = Object.values(cart);
+    const cartArrayWithValue = cartArray.map(product => ({
+      ...product,
+      "Product Value": product["Product Price"] * product["Product Quantity"]
+    }));
+
     dataLayer.push({
       event: "Cart Viewed",
       amplitude_event_properties: {
-        Products: cartArray
+        Products: cartArrayWithValue
       }
     });
-    console.log("Cart Viewed:", cartArray);
+    console.log("Cart Viewed:", cartArrayWithValue);
   });
 
   pageViewBtn.addEventListener('click', () => {
@@ -152,25 +143,34 @@ document.addEventListener('DOMContentLoaded', () => {
   startCheckoutButton.addEventListener('click', () => {
     const cart = getCart();
     const cartArray = Object.values(cart);
+    const cartArrayWithValue = cartArray.map(product => ({
+      ...product,
+      "Product Value": product["Product Price"] * product["Product Quantity"]
+    }));
+
     dataLayer.push({
       event: "Checkout Initiated",
       amplitude_event_properties: {
-        Products: cartArray
+        Products: cartArrayWithValue
       }
     });
-    console.log("Checkout Initiated:", cartArray);
+    console.log("Checkout Initiated:", cartArrayWithValue);
   });
 
   purchaseButton.addEventListener('click', () => {
     const cart = getCart();
     const cartArray = Object.values(cart);
-    const revenue = calculateRevenue(cart); // Assuming calculateRevenue is defined elsewhere or not strictly needed for this task
+    const revenue = calculateRevenue(cart);
     const transactionId = generateTransactionId();
-    
+    const cartArrayWithValue = cartArray.map(product => ({
+        ...product,
+        "Product Value": product["Product Price"] * product["Product Quantity"]
+      }));
+
     dataLayer.push({
       event: "Transaction Completed",
       amplitude_event_properties: {
-        Products: cartArray,
+        Products: cartArrayWithValue,
         Revenue: revenue,
         $revenue: revenue,
         $currency: "PLN",
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $transactionId: transactionId
       }
     });
-    console.log("Transaction Completed:", { Products: cartArray, Revenue: revenue, "Transaction ID": transactionId });
+    console.log("Transaction Completed:", { Products: cartArrayWithValue, Revenue: revenue, "Transaction ID": transactionId });
   });
 
   loginButton.addEventListener('click', () => {
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   changeWorkshopButton.addEventListener('click', () => {
     const workshopOptions = ["Grandpa's Workshop", "Subaru Garage", "Beekeeper's Woorkshop", "Anise's Cabin"];
     const randomWorkshopId = workshopOptions[Math.floor(Math.random() * workshopOptions.length)];
-    
+
     dataLayer.push({
       event: "Workshop Changed",
       amplitude_groups: {
